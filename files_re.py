@@ -10,7 +10,6 @@ def re_scrolls(path, regex):
     matches = []
     for dirpath, dirnames, filenames in os.walk(path):
         for file in filenames:
-            print(file, "ss")
             if re.match(regex, file):
                 matches.append(file)
             new_path = os.path.join(dirpath, file)
@@ -18,9 +17,9 @@ def re_scrolls(path, regex):
                 handler = open(new_path, "r")
                 line = handler.readline().strip()
                 while line:
-                    if re.match(regex, file):
-                        if filenames in matches:
-                            matches[file] = ">>" + file
+                    if re.match(regex, line):
+                        if file in matches:
+                            matches[matches.index(file)] = ">>" + file
                         else:
                             matches.append(file)
                     line = handler.readline()
@@ -30,7 +29,7 @@ def re_scrolls(path, regex):
 
 def main():
     path = "D:\\test\\1"
-    regex = "\w+"
+    regex = "[a-z]"
     matches = re_scrolls(path, regex)
     print(matches)
 
